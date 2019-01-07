@@ -3,6 +3,8 @@ package servlets;
 import accounts.AccountService;
 import accounts.UserProfile;
 import com.google.gson.Gson;
+import dbService.DBException;
+import dbService.DBService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,9 +14,10 @@ import java.io.IOException;
 
 public class SignUpServlet extends HttpServlet {
     private final AccountService accountService;
-
-    public SignUpServlet(AccountService accountService) {
+    private final DBService dbService;
+    public SignUpServlet(AccountService accountService, DBService dbService) {
         this.accountService = accountService;
+        this.dbService = dbService;
     }
 
 
@@ -31,7 +34,13 @@ public class SignUpServlet extends HttpServlet {
             return;
         }
 
-        accountService.addNewUser(userProfile);
+        //accountService.addNewUser(userProfile);
+
+        try {
+            dbService.addUser(login);
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
 
         Gson gson = new Gson();
         String json = gson.toJson(userProfile);

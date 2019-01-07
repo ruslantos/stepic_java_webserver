@@ -16,7 +16,6 @@ import servlets.SessionsServlet;
 import servlets.SignInServlet;
 import servlets.SignUpServlet;
 import servlets.UsersServlet;
-import java.io.IOException;
 
 /**
  * @author v.chibrikov
@@ -51,7 +50,7 @@ public class Main {
         context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/v1/sessions");
         context.addServlet(new ServletHolder(new UsersServlet(accountService)), "/api/v1/signup");
         context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
-        context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
+        context.addServlet(new ServletHolder(new SignUpServlet(accountService, dbService)), "/signup");
 
         ResourceHandler resource_handler = new ResourceHandler();
         resource_handler.setResourceBase("public_html");
