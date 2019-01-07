@@ -49,7 +49,7 @@ public class Main {
         context.addServlet(new ServletHolder(new UsersServlet(accountService)), "/api/v1/users");
         context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/v1/sessions");
         context.addServlet(new ServletHolder(new UsersServlet(accountService)), "/api/v1/signup");
-        context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
+        context.addServlet(new ServletHolder(new SignInServlet(accountService, dbService)), "/signin");
         context.addServlet(new ServletHolder(new SignUpServlet(accountService, dbService)), "/signup");
 
         ResourceHandler resource_handler = new ResourceHandler();

@@ -2,12 +2,10 @@ package dbService;
 
 import dbService.dao.UsersDAO;
 import dbService.dataSets.UsersDataSet;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.service.ServiceRegistry;
 
@@ -86,6 +84,14 @@ public class DBService {
         } catch (HibernateException e) {
             throw new DBException(e);
         }
+    }
+
+    public UsersDataSet readByName(String name) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(UsersDataSet.class);
+        return (UsersDataSet) criteria
+                .add(Restrictions.eq("name", name))
+                .uniqueResult();
     }
 
     public void printConnectInfo() {
